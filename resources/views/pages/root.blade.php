@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '首页')
+@section('title', 'Parallation')
 
 @section('content')
   <div class="jumbotron">
@@ -16,5 +16,5 @@
     </p>
     @endguest
   </div>
-  @stop
+ @stop
 
