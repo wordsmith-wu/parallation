@@ -16190,3 +16190,42 @@ body {
   padding: 3px;
 }
 
+/* document Index Page */
+
+.documents-index-page .document-list .nav > li > a {
+  position: relative;
+  display: block;
+  padding: 5px 14px;
+  font-size: 0.9em;
+}
+
+.documents-index-page .document-list a {
+  color: #444444;
+}
+
+.documents-index-page .document-list .meta {
+  font-size: 0.9em;
+  color: #b3b3b3;
+}
+
+.documents-index-page .document-list .meta a {
+  color: #b3b3b3;
+}
+
+.documents-index-page .document-list .badge {
+  background-color: #d8d8d8;
+}
+
+.documents-index-page .document-list hr {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  border: 0;
+  border-top: 1px solid #dcebf5;
+}
+
+/* Add container and footer space */
+
+#app > div.container {
+  margin-bottom: 100px;
+}
+
