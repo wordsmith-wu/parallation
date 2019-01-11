@@ -10,9 +10,11 @@
     <p>
       一切，将从这里开始。
     </p>
+    @guest
     <p>
       <a class="btn btn-lg btn-success" href="{{ route('register')}}" role="button">现在注册</a>
     </p>
+    @endguest
   </div>
   @stop
 
