@@ -14,9 +14,9 @@ class DocumentsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index()
+	public function index(Request $request, Document $document)
 	{
-		$documents = Document::with('user','category')->paginate();
+		$documents = $document->withOrder($request->order)->paginate(20);
 		return view('documents.index', compact('documents'));
 	}
 

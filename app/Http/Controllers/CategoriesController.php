@@ -7,9 +7,9 @@ use App\Models\Document;
 use App\Models\Category;
 class CategoriesController extends Controller
 {
-    public function show(Category $category)
+    public function show(Category $category, Request $request, Document $document)
     {
-    		$documents = Document::where('category_id', $category->id)->paginate(20);
+    		$documents = $document->withOrder($request->order)->where('category_id', $category->id)->paginate(20);
 
     		return view('documents.index',compact('documents','category'));
     }
