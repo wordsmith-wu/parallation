@@ -16192,31 +16192,37 @@ body {
 
 /* document Index Page */
 
-.documents-index-page .document-list .nav > li > a {
+.documents-index-page .document-list .nav > li > a,
+categories-show-page .document-list .nav > li > a {
   position: relative;
   display: block;
   padding: 5px 14px;
   font-size: 0.9em;
 }
 
-.documents-index-page .document-list a {
+.documents-index-page .document-list a,
+categories-show-page .document-list a {
   color: #444444;
 }
 
-.documents-index-page .document-list .meta {
+.documents-index-page .document-list .meta,
+categories-show-page .document-list .meta {
   font-size: 0.9em;
   color: #b3b3b3;
 }
 
-.documents-index-page .document-list .meta a {
+.documents-index-page .document-list .meta a,
+categories-show-page .document-list .meta a {
   color: #b3b3b3;
 }
 
-.documents-index-page .document-list .badge {
+.documents-index-page .document-list .badge,
+categories-show-page .document-list .badge {
   background-color: #d8d8d8;
 }
 
-.documents-index-page .document-list hr {
+.documents-index-page .document-list hr,
+categories-show-page .document-list hr {
   margin-top: 12px;
   margin-bottom: 12px;
   border: 0;

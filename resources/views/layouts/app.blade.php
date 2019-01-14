@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Parallation 翻译平台')</title>
-    <link rel="icon" href="https://lg-e9axehe0-1256892260.cos.ap-shanghai.myqcloud.com/head.png" sizes="16x16 32x32" type="image/png">
+    <link rel="icon" href="/svg/letter-p.png" sizes="16x16 32x32" type="image/png">
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">

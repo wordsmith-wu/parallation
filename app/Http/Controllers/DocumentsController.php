@@ -57,4 +57,11 @@ class DocumentsController extends Controller
 
 		return redirect()->route('documents.index')->with('message', 'Deleted successfully.');
 	}
+
+  public function excel()
+  {
+      return view('documents.excel');
+  }
+
+  
 }

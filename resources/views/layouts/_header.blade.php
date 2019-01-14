@@ -10,9 +10,15 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Left Side Of Navbar -->
-      <ul class="navbar-nav mr-auto">
 
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item {{ active_class(if_route('documents.index')) }}"><a class="nav-link" href="{{ route('documents.index') }}">文档分类</a></li>
+        <li class="nav-item {{ category_nav_active(1) }}"><a class="nav-link" href="{{ route('categories.show', 1) }}">合同</a></li>
+        <li class="nav-item {{ category_nav_active(2) }}"><a class="nav-link" href="{{ route('categories.show', 2) }}">技术</a></li>
+        <li class="nav-item {{ category_nav_active(3) }}"><a class="nav-link" href="{{ route('categories.show', 3) }}">邮件</a></li>
+        <li class="nav-item {{ category_nav_active(4) }}"><a class="nav-link" href="{{ route('categories.show', 4) }}">图纸</a></li>
       </ul>
+
 
       <!-- Right Side Of Navbar -->
       <ul class="navbar-nav navbar-right">
