@@ -7,6 +7,8 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
+use App\Models\Document;
+
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
@@ -29,4 +31,9 @@ class User extends Authenticatable implements MustVerifyEmailContract
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
 }

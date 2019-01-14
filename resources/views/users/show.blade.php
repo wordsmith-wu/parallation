@@ -26,10 +26,14 @@
     </div>
     <hr>
 
-    {{-- 用户发布的内容 --}}
-    <div class="card ">
+    {{-- 用户发布的文件 --}}
+    <div class="card">
       <div class="card-body">
-        暂无数据 ~_~
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a class="nav-link active bg-transparent" href="#">Ta 的文件</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Ta 的翻译</a></li>
+        </ul>
+        @include('users._documents', ['documents' => $user->documents()->recent()->paginate(5)])
       </div>
     </div>
 
