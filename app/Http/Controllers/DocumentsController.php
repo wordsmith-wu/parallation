@@ -42,7 +42,7 @@ class DocumentsController extends Controller
 		$document->fill($request->all());
 		$document->user_id = Auth::id();
 		$document->save();
-		return redirect()->to($topic->link())->with('message', '文件创建成功');
+		return redirect()->to($document->link())->with('message', '文件创建成功');
 	}
 
 	public function edit(Document $document)
@@ -57,7 +57,7 @@ class DocumentsController extends Controller
 		$this->authorize('update', $document);
 		$document->update($request->all());
 
-		return redirect()->to($topic->link())->with('message', 'Updated successfully.');
+		return redirect()->to($document->link())->with('message', 'Updated successfully.');
 	}
 
 	public function destroy(Document $document)

@@ -3,17 +3,17 @@
 namespace App\Observers;
 
 use App\Models\Document;
-use App\Handlers\SlugTranslateHandler;
+use App\Jobs\TranslateSlug;
 
 // creating, created, updating, updated, saving,
 // saved,  deleting, deleted, restoring, restored
 
 class DocumentObserver
 {
-    public function saving(Document $document)
+    public function saved(Document $document)
     {
         if ( ! $document->slug) {
-            $document->slug = app(SlugTranslateHandler::class)->translate($document->title);
+            dispatch(new TranslateSlug($document));
         }
     }
 
