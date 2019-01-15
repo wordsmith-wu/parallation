@@ -11,10 +11,10 @@
         <div class="media-body">
 
           <div class="media-heading mt-0 mb-1">
-            <a href="{{ route('documents.show', [$document->id]) }}" title="{{ $document->title }}">
+            <a href="{{ $document->link() }}" title="{{ $document->title }}">
               {{ $document->title }}
             </a>
-            <a class="float-right" href="{{ route('documents.show', [$document->id]) }}">
+            <a class="float-right" href="{{ $document->link() }}">
               <span class="badge badge-secondary badge-pill"> {{ $document->paragraphs_count }} </span>
             </a>
           </div>

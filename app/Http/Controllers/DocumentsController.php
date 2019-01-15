@@ -23,8 +23,11 @@ class DocumentsController extends Controller
 		return view('documents.index', compact('documents'));
 	}
 
-    public function show(Document $document)
+    public function show(Request $request, Document $document)
     {
+    		if (! empty($document->slug) && $document->slug != $request->slug) {
+    				return redirect($document->link(),301);
+    		}
         return view('documents.show', compact('document'));
     }
 
@@ -39,13 +42,14 @@ class DocumentsController extends Controller
 		$document->fill($request->all());
 		$document->user_id = Auth::id();
 		$document->save();
-		return redirect()->route('documents.show', $document->id)->with('message', '文件创建成功');
+		return redirect()->to($topic->link())->with('message', '文件创建成功');
 	}
 
 	public function edit(Document $document)
 	{
         $this->authorize('update', $document);
-		return view('documents.create_and_edit', compact('document'));
+        $categories = Category::all();
+		return view('documents.create_and_edit', compact('document','categories'));
 	}
 
 	public function update(DocumentRequest $request, Document $document)
@@ -53,7 +57,7 @@ class DocumentsController extends Controller
 		$this->authorize('update', $document);
 		$document->update($request->all());
 
-		return redirect()->route('documents.show', $document->id)->with('message', 'Updated successfully.');
+		return redirect()->to($topic->link())->with('message', 'Updated successfully.');
 	}
 
 	public function destroy(Document $document)
@@ -61,7 +65,7 @@ class DocumentsController extends Controller
 		$this->authorize('destroy', $document);
 		$document->delete();
 
-		return redirect()->route('documents.index')->with('message', 'Deleted successfully.');
+		return redirect()->route('documents.index')->with('message', '成功删除');
 	}
 
   public function excel()

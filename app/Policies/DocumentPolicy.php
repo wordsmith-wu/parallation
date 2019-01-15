@@ -10,11 +10,11 @@ class DocumentPolicy extends Policy
     public function update(User $user, Document $document)
     {
         // return $document->user_id == $user->id;
-        return true;
+        return $user->isAuthorOf($document);
     }
 
     public function destroy(User $user, Document $document)
     {
-        return true;
+        return $user->isAuthorOf($document);
     }
 }

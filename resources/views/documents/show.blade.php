@@ -1,60 +1,61 @@
 @extends('layouts.app')
 
+@section('title', $document->title)
+
 @section('content')
 
-<div class="container">
-  <div class="col-md-10 offset-md-1">
-    <div class="card ">
-      <div class="card-header">
-        <h1>Document / Show #{{ $document->id }}</h1>
-      </div>
+  <div class="row">
 
-      <div class="card-body">
-        <div class="card-block bg-light">
-          <div class="row">
-            <div class="col-md-6">
-              <a class="btn btn-link" href="{{ route('documents.index') }}"><- Back</a>
-            </div>
-            <div class="col-md-6">
-              <a class="btn btn-sm btn-warning float-right mt-1" href="{{ route('documents.edit', $document->id) }}">
-                Edit
+    <div class="col-lg-3 col-md-3 hidden-sm hidden-xs author-info">
+      <div class="card ">
+        <div class="card-body">
+          <div class="text-center">
+            作者：{{ $document->user->name }}
+          </div>
+          <hr>
+          <div class="media">
+            <div align="center">
+              <a href="{{ route('users.show', $document->user->id) }}">
+                <img class="thumbnail img-fluid" src="{{ $document->user->avatar }}" width="300px" height="300px">
               </a>
             </div>
           </div>
         </div>
-        <br>
+      </div>
+    </div>
 
-        <label>Title</label>
-<p>
-	{{ $document->title }}
-</p> <label>Body</label>
-<p>
-	{{ $document->body }}
-</p> <label>User_id</label>
-<p>
-	{{ $document->user_id }}
-</p> <label>Category_id</label>
-<p>
-	{{ $document->category_id }}
-</p> <label>Paragraphs_count</label>
-<p>
-	{{ $document->paragraphs_count }}
-</p> <label>Words_count</label>
-<p>
-	{{ $document->words_count }}
-</p> <label>Last_translator_id</label>
-<p>
-	{{ $document->last_translator_id }}
-</p> <label>Order</label>
-<p>
-	{{ $document->order }}
-</p> <label>Slug</label>
-<p>
-	{{ $document->slug }}
-</p>
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 document-content">
+      <div class="card ">
+        <div class="card-body">
+          <h1 class="text-center mt-3 mb-3">
+            {{ $document->title }}
+          </h1>
+
+          <div class="article-meta text-center text-secondary">
+            {{ $document->created_at->diffForHumans() }}
+            ⋅
+            <i class="far fa-comment"></i>
+            {{ $document->paragraphs_count }}
+          </div>
+
+          <div class="document-body mt-4 mb-4">
+            {!! $document->description !!}
+          </div>
+
+          @can('update',$document)
+          <div class="operate">
+            <hr>
+            <a href="{{ route('documents.edit', $document->id) }}" class="btn btn-outline-secondary btn-sm" role="button">
+              <i class="far fa-edit"></i> 编辑
+            </a>
+            <a href="#" class="btn btn-outline-secondary btn-sm" role="button">
+              <i class="far fa-trash-alt"></i> 删除
+            </a>
+          </div>
+          @endcan
+
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-@endsection
+@stop
