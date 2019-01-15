@@ -6,6 +6,9 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DocumentRequest;
+use App\Models\Category;
+use Auth;
+
 
 class DocumentsController extends Controller
 {
@@ -27,13 +30,16 @@ class DocumentsController extends Controller
 
 	public function create(Document $document)
 	{
-		return view('documents.create_and_edit', compact('document'));
+		$categories = Category::all();
+		return view('documents.create_and_edit', compact('document','categories'));
 	}
 
-	public function store(DocumentRequest $request)
+	public function store(DocumentRequest $request, Document $document)
 	{
-		$document = Document::create($request->all());
-		return redirect()->route('documents.show', $document->id)->with('message', 'Created successfully.');
+		$document->fill($request->all());
+		$document->user_id = Auth::id();
+		$document->save();
+		return redirect()->route('documents.show', $document->id)->with('message', '文件创建成功');
 	}
 
 	public function edit(Document $document)

@@ -9,13 +9,10 @@ use App\Models\Document;
 
 class DocumentObserver
 {
-    public function creating(Document $document)
+    public function saving(Document $document)
     {
         //
     }
 
-    public function updating(Document $document)
-    {
-        //
-    }
+
 }
