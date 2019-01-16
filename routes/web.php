@@ -38,7 +38,15 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 Route::resource('users', 'UsersController', ['only' => ['show', 'update', 'edit']]);
 
 Route::resource('documents', 'DocumentsController', ['only' => ['index', 'create', 'store', 'update', 'edit', 'destroy']]);
+//Excel相关路由
+Route::get('documents/excel', 'DocumentsController@excel')->name('documents.excel');
+Route::post('documents/export', 'DocumentsController@export')->name('documents.export');
+Route::post('documents/import', 'DocumentsController@import')->name('documents.import');
+
 Route::get('documents/{document}/{slug?}', 'DocumentsController@show')->name('documents.show');
+
+
+Route::post('documents/upload', 'DocumentsController@upload')->name('documents.upload');
 
 
 Route::resource('categories','CategoriesController',['only'=>['show']]);

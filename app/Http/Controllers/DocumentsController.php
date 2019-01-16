@@ -68,10 +68,49 @@ class DocumentsController extends Controller
 		return redirect()->route('documents.index')->with('message', '成功删除');
 	}
 
-  public function excel()
-  {
-      return view('documents.excel');
-  }
+	public function upload(Request $request)
+	{
+		return view('documents.upload');
+	}
 
-  
+	public function excel()
+	{
+		return view('documents.excel');
+	}
+
+    public function export(Request $request, Document $document)
+    {
+        $days = $request->days;
+        $documents = $document->whereDate('created_at', '>=', now()->subDays($days))->get();
+
+        $name = 'Documents-within-'.$days.'-days';
+        \Excel::create($name, function($excel) use ($documents) {
+            $excel->sheet('documents', function($sheet) use ($documents) {
+                $sheet->fromArray($documents->toArray());
+            });
+        })->export('xls');
+    }
+
+
+    public function import(Request $request)
+    {
+        \Excel::load($request->excel, function($reader) {
+            // 获取第一个 数据表
+            $sheet = $reader->first();
+            // 遍历数据表中的数据
+            $sheet->each(function($documentData) {
+                $document = document::find($documentData['id']);
+                if (!$document) {
+                    return;
+                }
+
+                $document->title = $documentData['标题'];
+                $document->category_id = $documentData['分类id'];
+                $document->save();
+            });
+        });
+
+        return redirect()->route('documents.excel')->with('success', '导入成功！');
+    }
+
 }
