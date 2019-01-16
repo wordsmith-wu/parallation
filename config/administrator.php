@@ -21,7 +21,7 @@ return array(
      *
      * @type string
      */
-    'title' => config('app.name'),
+    'title' => config('app.name','Parallation'),
 
     /*
      * The path to your model config directory
