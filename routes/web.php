@@ -50,3 +50,5 @@ Route::post('documents/upload', 'DocumentsController@upload')->name('documents.u
 
 
 Route::resource('categories','CategoriesController',['only'=>['show']]);
+
+Route::resource('projects', 'ProjectsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
