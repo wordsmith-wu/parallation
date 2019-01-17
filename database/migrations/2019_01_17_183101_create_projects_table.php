@@ -10,7 +10,7 @@ class CreateProjectsTable extends Migration
 		Schema::create('projects', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->integer('user_id')->unsigned()->index();
             $table->integer('order')->unsigned()->default(0);
             $table->string('slug')->nullable();

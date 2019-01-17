@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 
+use Auth;
+
 class ProjectsController extends Controller
 {
     public function __construct()
@@ -16,7 +18,7 @@ class ProjectsController extends Controller
 
 	public function index()
 	{
-		$projects = Project::paginate();
+		$projects = Project::with('user')->paginate();
 		return view('projects.index', compact('projects'));
 	}
 
@@ -30,10 +32,12 @@ class ProjectsController extends Controller
 		return view('projects.create_and_edit', compact('project'));
 	}
 
-	public function store(ProjectRequest $request)
+	public function store(ProjectRequest $request, Project $project)
 	{
-		$project = Project::create($request->all());
-		return redirect()->route('projects.show', $project->id)->with('message', 'Created successfully.');
+		$project->fill($request->all());
+		$project->user_id = Auth::id();
+		$project->save();
+		return redirect()->route('projects.show', $project->id)->with('sucess', '创建项目成功！');
 	}
 
 	public function edit(Project $project)

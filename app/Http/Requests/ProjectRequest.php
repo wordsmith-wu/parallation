@@ -20,7 +20,7 @@ class ProjectRequest extends Request
             case 'PATCH':
             {
                 return [
-                    // UPDATE ROLES
+                    'name' => 'required|min:6'
                 ];
             }
             case 'GET':
@@ -35,7 +35,7 @@ class ProjectRequest extends Request
     public function messages()
     {
         return [
-            // Validation messages
+            'name.min' => '项目名称至少6个字符',
         ];
     }
 }
