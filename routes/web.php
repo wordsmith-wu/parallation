@@ -52,3 +52,12 @@ Route::post('documents/upload', 'DocumentsController@upload')->name('documents.u
 Route::resource('categories','CategoriesController',['only'=>['show']]);
 
 Route::resource('projects', 'ProjectsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('files', 'FilesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'destroy']]);
+
+//文件上传相关路由
+Route::post('files/download', 'FilesController@download')->name('files.download');
+Route::post('files/upload', 'FilesController@upload')->name('files.upload');
+
+Route::resource('comments', 'CommentsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('translations', 'TranslationsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('paragraphs', 'ParagraphsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
