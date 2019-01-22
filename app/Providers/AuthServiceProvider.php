@@ -13,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+		 \App\Models\Language::class => \App\Policies\LanguagePolicy::class,
 		 \App\Models\Paragraph::class => \App\Policies\ParagraphPolicy::class,
 		 \App\Models\Translation::class => \App\Policies\TranslationPolicy::class,
 		 \App\Models\Comment::class => \App\Policies\CommentPolicy::class,

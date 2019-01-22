@@ -66,3 +66,4 @@ Route::post('files/upload', 'FilesController@upload')->name('files.upload');
 Route::resource('comments', 'CommentsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
 Route::resource('translations', 'TranslationsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
 Route::resource('paragraphs', 'ParagraphsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('languages', 'LanguagesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
