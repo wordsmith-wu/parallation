@@ -67,3 +67,4 @@ Route::resource('comments', 'CommentsController', ['only' => ['index', 'show', '
 Route::resource('translations', 'TranslationsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
 Route::resource('paragraphs', 'ParagraphsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
 Route::resource('languages', 'LanguagesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('terms', 'TermsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
