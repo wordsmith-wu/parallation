@@ -52,6 +52,11 @@ Route::post('documents/upload', 'DocumentsController@upload')->name('documents.u
 Route::resource('categories','CategoriesController',['only'=>['show']]);
 
 Route::resource('projects', 'ProjectsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+
+Route::get('files/import', 'FilesController@import')->name('files.import');
+Route::get('files/export', 'FilesController@export')->name('files.export');
+
+
 Route::resource('files', 'FilesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'destroy']]);
 
 //文件上传相关路由

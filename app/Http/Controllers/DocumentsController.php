@@ -99,7 +99,7 @@ class DocumentsController extends Controller
             $sheet = $reader->first();
             // 遍历数据表中的数据
             $sheet->each(function($documentData) {
-                $document = document::find($documentData['id']);
+                $document = Document::find($documentData['id']);
                 if (!$document) {
                     return;
                 }

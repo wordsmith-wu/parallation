@@ -34,7 +34,8 @@ class FileUploadHandler
         $file->move($upload_path, $filename);
 
         return [
-            'path' => config('app.url') . "/$folder_name/$filename"
+            'path' => config('app.url') . "/$folder_name/$filename",
+            'relativepath' => "/$folder_name/$filename"
         ];
     }
 
