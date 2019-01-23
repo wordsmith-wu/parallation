@@ -30,12 +30,12 @@ class FileUploadHandler
             return false;
         }
 
-        // 将图片移动到我们的目标存储路径中
+        // 将文件移动到我们的目标存储路径中
         $file->move($upload_path, $filename);
 
         return [
             'path' => config('app.url') . "/$folder_name/$filename",
-            'relativepath' => "/$folder_name/$filename"
+            'localpath' => public_path() . "/$folder_name/$filename"
         ];
     }
 

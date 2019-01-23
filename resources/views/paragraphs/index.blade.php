@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
   <div class="col-md-10 offset-md-1">
     <div class="card ">
       <div class="card-header">
         <h1>
-          Paragraph
-          <a class="btn btn-success float-xs-right" href="{{ route('paragraphs.create') }}">Create</a>
+          待翻译段落
         </h1>
       </div>
 
@@ -16,9 +16,11 @@
           <table class="table table-sm table-striped">
             <thead>
               <tr>
-                <th class="text-xs-center">#</th>
-                <th>File_id</th> <th>Content</th> <th>Source_language_id</th> <th>Target_language_id</th> <th>Translation</th> <th>Translator_id</th> <th>Proofread_id</th> <th>Flag</th>
-                <th class="text-xs-right">OPTIONS</th>
+                <th class="text-xs-center">编号</th>
+                <th>原文</th> 
+                <th>翻译方向</th> 
+                <th>译文</th> 
+                <th class="text-xs-right">操作</th>
               </tr>
             </thead>
 
@@ -27,7 +29,17 @@
               <tr>
                 <td class="text-xs-center"><strong>{{$paragraph->id}}</strong></td>
 
-                <td>{{$paragraph->file_id}}</td> <td>{{$paragraph->content}}</td> <td>{{$paragraph->source_language_id}}</td> <td>{{$paragraph->target_language_id}}</td> <td>{{$paragraph->translation}}</td> <td>{{$paragraph->translator_id}}</td> <td>{{$paragraph->proofread_id}}</td> <td>{{$paragraph->flag}}</td>
+                <td>{{$paragraph->content}}</td> 
+                <td>{{$paragraph->source_language_id==2?'中文-->英文':'英文-->中文'}}</td> 
+                <td>
+                    <form action="{{ route('paragraphs.update', $paragraph->id) }}" method="POST" style="display: inline;" accept-charset="UTF-8">
+                      {{csrf_field()}}
+                      <input type="hidden" name="_method" value="PUT">
+                      <input class="form-control" type="text" name="translation" id="paragraph-translation-field" value="{{ old('translation', $paragraph->translation ) }}" />
+                      <button type="submit" class="btn btn-sm">确认</button>
+                    </form>
+                </td> 
+
 
                 <td class="text-xs-right">
                   <a class="btn btn-sm btn-primary" href="{{ route('paragraphs.show', $paragraph->id) }}">

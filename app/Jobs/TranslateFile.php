@@ -9,9 +9,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 use App\Models\File;
-use App\Handlers\SlugTranslateHandler;
+use App\Models\Language;
+use App\Models\Paragraph;
+use App\Handlers\TranslationHandler;
 
-class TranslateSlug implements ShouldQueue
+class TranslateFile implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -20,6 +22,8 @@ class TranslateSlug implements ShouldQueue
      *
      * @return void
      */
+
+    protected $file;
     public function __construct(File $file)
     {
         $this->file = $file;
@@ -32,7 +36,11 @@ class TranslateSlug implements ShouldQueue
      */
     public function handle()
     {
-        $slug = app(SlugTranslateHandler::class)->translate($this->file->name);
-        \DB::table('files')->where('id',$this->file->id)->update(['slug'=>$slug]);
+
+        foreach ($this->file->paragraphs as $paragraph){
+            $translation = app(TranslationHandler::class)->niuTranslate($paragraph->content,Language::find($paragraph->source_language_id)->code,Language::find($paragraph->target_language_id)->code);
+            \DB::table('paragraphs')->where('id',$paragraph->id)->update(['translation'=>$translation]);
+        }
+
     }
 }

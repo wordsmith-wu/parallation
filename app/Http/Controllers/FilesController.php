@@ -11,7 +11,8 @@ use App\Models\Paragraph;
 use App\Handlers\FileUploadHandler;
 use App\Models\Project;
 use App\Handlers\TranslationHandler;
-
+use App\Handlers\Docx2TextHandler;
+use App\Handlers\SlugTranslateHandler;
 use Auth;
 
 class FilesController extends Controller
@@ -23,13 +24,20 @@ class FilesController extends Controller
 
 	public function index()
 	{
-		$files = File::paginate();
+		$files = File::recent()->paginate();
 		return view('files.index', compact('files'));
 	}
 
+    // public function show(File $file)
+    // {
+    //     return view('files.show', compact('file'));
+    // }
+
+
     public function show(File $file)
     {
-        return view('files.show', compact('file'));
+		$paragraphs = Paragraph::where('file_id',$file->id)->paginate();
+		return view('paragraphs.index', compact('paragraphs','file'))->with('message', 'Created successfully.');
     }
 
 	public function create(File $file)
@@ -66,20 +74,20 @@ class FilesController extends Controller
 		if ($request){
 			$result = $uploader->save($request->file,'upload',Auth::id(),416);
 			$data['url'] = $result['path'];
-			$data['relativepath'] = $result['relativepath'];
+			$data['path'] = $result['localpath'];
 			$data['type'] = strtolower($request->file->getClientOriginalExtension());
-			$data['name'] = $request->file->getClientOriginalName();
+			$data['name'] = str_replace('.' . $request->file->getClientOriginalExtension(), "", $request->file->getClientOriginalName());
 
-			if ($request['direction'] == '0'){
-				$data['source_language_id'] = 0;
+			if ($request['direction'] == 0){
+				$data['source_language_id'] = 2;
 				$data['target_language_id'] = 1;
-			} else {
+			} elseif ($request['direction'] == 0) {
 				$data['source_language_id'] = 1;
-				$data['target_language_id'] = 0;				
+				$data['target_language_id'] = 2;				
 			}
 
 			$data['user_id'] = Auth::id();
-		}
+		} 
 
 		$file->fill($data);
 		$file->save();
@@ -110,9 +118,7 @@ class FilesController extends Controller
 	public function import()
 	{
   
-		$source = '/home/wordsmith/Code/parallation/public/uploads/files/test.txt';
-		$para = Paragraph::first();
-		$result = app(TranslationHandler::class)->baiduTranslate($para->content,'zh','en');
+		$result =app(SlugTranslateHandler::class)->translate('这是一个测试');
 		return view('files.result',compact('result'));
 	}
 
@@ -121,10 +127,38 @@ class FilesController extends Controller
 	{
   
 		$source = '/home/wordsmith/Code/parallation/public/uploads/files/test.xlsx';
-		$phpExcel = \Excel::load($source);
-		$sheet = $phpExcel->first();
+	    $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ'); 
 
-		 dd(var_dump($sheet->first()));
+
+
+		$obj = \Excel::load($source);
+		// 加载docx文件
+	    $currSheet = $obj->getSheet(0);   //获取指定的sheet表 
+	    $columnH = $currSheet->getHighestColumn();   //取得最大的列号 
+	    $columnCnt = array_search($columnH, $cellName); 
+	    $rowCnt = $currSheet->getHighestRow();   //获取总行数 
+	   
+	    $data = array(); 
+	    for($_row=1; $_row<=$rowCnt; $_row++){  //读取内容 
+	        for($_column=0; $_column<=$columnCnt; $_column++){ 
+	            $cellId = $cellName[$_column].$_row; 
+	            $cellValue = $currSheet->getCell($cellId)->getValue(); 
+	             //$cellValue = $currSheet->getCell($cellId)->getCalculatedValue();  #获取公式计算的值 
+	            if($cellValue instanceof PHPExcel_RichText){   //富文本转换字符串 
+	                $cellValue = $cellValue->__toString(); 
+	            } 
+	   
+	            array_push($data, $cellValue); 
+	        } 
+	    } 
+
+		// 将内容存入$docx变量中
+		$paras = $data;
+		// 调试输出
+		// var_dump($paras);
+		// $para = Paragraph::first();
+		// $result = app(TranslationHandler::class)->baiduTranslate($para->content,'zh','en');
+		// return view('files.result',compact('result'));
 		return view('files.showparas',compact('paras'));
 	}
 
@@ -132,14 +166,13 @@ class FilesController extends Controller
 	{
   
 		$source = '/home/wordsmith/Code/parallation/public/uploads/files/test.docx';
-		$phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
-		// dd($phpWord);
-		// $paras = array(['段落A','段落B']);
-		// return redirect()->route('files.showparas',compact('paras'))->with('message', 'Created successfully.');
-		//$paras = ['段落A','段落B'];
-		//$paras = $phpWord->getSection(0)->getTexts();
-		 dd(var_dump($phpWord->getSections()));
-		// $phpWord->save("/home/wordsmith/Code/parallation/public/uploads/files/testb.docx");
+		// 实例化
+		$text = app(Docx2TextHandler::class);
+		// 加载docx文件
+		$text->setDocx($source);
+		// 将内容存入$docx变量中
+		$paras = $text->extract();
+
 		return view('files.showparas',compact('paras'));
 	}
 

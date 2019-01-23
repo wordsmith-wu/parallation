@@ -25,8 +25,8 @@
             <div class="form-group">
               <label for="direction">请选择翻译方向</label>
               <select class="form-control" name="direction" required>
-                <option value=1>中文-->英文</option>
-                <option value=0>英文-->中文</option>
+                <option value=0>中文-->英文</option>
+                <option value=1>英文-->中文</option>
               </select>
             </div>
 

@@ -6,6 +6,7 @@ use App\Models\Paragraph;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ParagraphRequest;
+use App\Models\File;
 
 class ParagraphsController extends Controller
 {
@@ -20,10 +21,13 @@ class ParagraphsController extends Controller
 		return view('paragraphs.index', compact('paragraphs'));
 	}
 
+
+
     public function show(Paragraph $paragraph)
     {
         return view('paragraphs.show', compact('paragraph'));
     }
+
 
 	public function create(Paragraph $paragraph)
 	{
@@ -47,7 +51,8 @@ class ParagraphsController extends Controller
 		$this->authorize('update', $paragraph);
 		$paragraph->update($request->all());
 
-		return redirect()->route('paragraphs.show', $paragraph->id)->with('message', 'Updated successfully.');
+		// return redirect()->route('paragraphs.show', $paragraph->id)->with('message', 'Updated successfully.');
+		return redirect()->back();
 	}
 
 	public function destroy(Paragraph $paragraph)

@@ -4,5 +4,15 @@ namespace App\Models;
 
 class Comment extends Model
 {
-    protected $fillable = ['paragraph_id', 'user_id', 'comment'];
+    protected $fillable = ['comment'];
+
+    public function paragraph()
+    {
+    		return $this-belongsTo(Paragraph::class);
+    }
+
+    public function user()
+    {
+    		return $this-belongsTo(User::calss);
+    }
 }

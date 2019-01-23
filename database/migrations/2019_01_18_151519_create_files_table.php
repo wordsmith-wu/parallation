@@ -13,6 +13,7 @@ class CreateFilesTable extends Migration
             $table->integer('source_language_id')->unsigned();
             $table->integer('target_language_id')->unsigned();
             $table->string('url');
+            $table->string('path');
             $table->string('download_url')->nullable();
             $table->integer('paragraphs_count')->unsigned()->default(0);
             $table->integer('words_count')->unsigned()->default(0);
@@ -21,6 +22,7 @@ class CreateFilesTable extends Migration
             $table->integer('project_id')->unsigned()->index();
             $table->integer('status')->unsigned()->default(0);
             $table->integer('completed')->unsigned()->default(0);
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
 	}

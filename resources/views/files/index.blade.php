@@ -1,57 +1,34 @@
 @extends('layouts.app')
 
+@section('title', '文件列表')
+
 @section('content')
-<div class="container">
-  <div class="col-md-10 offset-md-1">
+
+<div class="row mb-5">
+  <div class="col-lg-9 col-md-9 topic-list">
     <div class="card ">
-      <div class="card-header">
-        <h1>
-          File
-          <a class="btn btn-success float-xs-right" href="{{ route('files.create') }}">Create</a>
-        </h1>
+
+      <div class="card-header bg-transparent">
+        <ul class="nav nav-pills">
+<!--           <li class="nav-item"><a class="nav-link active" href="#">最后回复</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">最新发布</a></li> -->
+          <li class="nav-item"><a class="nav-link active" href="{{ route('files.create') }}">上传文件</a></li>
+        </ul>
       </div>
 
       <div class="card-body">
-        @if($files->count())
-          <table class="table table-sm table-striped">
-            <thead>
-              <tr>
-                <th class="text-xs-center">#</th>
-                <th>Name</th> <th>Source_language_id</th> <th>Target_language_id</th> <th>Url</th> <th>Download_url</th> <th>Paragraphs_count</th> <th>Words_count</th> <th>Type</th> <th>User_id</th> <th>Project_id</th> <th>Status</th> <th>Completed</th>
-                <th class="text-xs-right">OPTIONS</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              @foreach($files as $file)
-              <tr>
-                <td class="text-xs-center"><strong>{{$file->id}}</strong></td>
-
-                <td>{{$file->name}}</td> <td>{{$file->source_language_id}}</td> <td>{{$file->target_language_id}}</td> <td>{{$file->url}}</td> <td>{{$file->download_url}}</td> <td>{{$file->paragraphs_count}}</td> <td>{{$file->words_count}}</td> <td>{{$file->type}}</td> <td>{{$file->user_id}}</td> <td>{{$file->project_id}}</td> <td>{{$file->status}}</td> <td>{{$file->completed}}</td>
-
-                <td class="text-xs-right">
-                  <a class="btn btn-sm btn-primary" href="{{ route('files.show', $file->id) }}">
-                    V
-                  </a>
-
-
-                  <form action="{{ route('files.destroy', $file->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete? Are you sure?');">
-                    {{csrf_field()}}
-                    <input type="hidden" name="_method" value="DELETE">
-
-                    <button type="submit" class="btn btn-sm btn-danger">D </button>
-                  </form>
-                </td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-          {!! $files->render() !!}
-        @else
-          <h3 class="text-xs-center alert alert-info">Empty!</h3>
-        @endif
+        {{-- 文件列表 --}}
+        @include('files._file_list', ['files' => $files])
+        {{-- 分页 --}}
+        <div class="mt-5">
+          {!! $files->appends(Request::except('page'))->render() !!}
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="col-lg-3 col-md-3 sidebar">
+    @include('files._sidebar')
   </div>
 </div>
 

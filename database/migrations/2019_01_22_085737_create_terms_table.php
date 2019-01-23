@@ -10,8 +10,8 @@ class CreateTermsTable extends Migration
 		Schema::create('terms', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('creation_id')->unsigned()->index();
-            $table->integer('change_id')->unsigned()->index();
-            $table->integer('usagecount')->unsigned();
+            $table->integer('change_id')->unsigned()->index()->nullable();
+            $table->integer('usagecount')->unsigned()->default(0);
             $table->integer('source_language_id')->unsigned();
             $table->integer('target_language_id')->unsigned();
             $table->string('source_text');

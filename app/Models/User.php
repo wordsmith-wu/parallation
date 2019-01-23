@@ -40,8 +40,36 @@ class User extends Authenticatable implements MustVerifyEmailContract
         return $this->hasMany(Document::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function isAuthorOf($model)
     {
         return $this->id == $model->user_id;
     }
+
+    public function setPasswordAttribute($value)
+    {
+        if (strlen($value) != 60){
+            $value = bcrypt($value);
+        }
+
+        $this->attributes['password'] = $value;
+    }
+
+    public function setAvatarAttribute($path)
+    {
+        if (! starts_with($path,'http')){
+            $path = config('app.url') . "/uploads/images/avatars/$path";
+        }
+        $this->attributes['avatar'] = $path;
+    }
+
 }

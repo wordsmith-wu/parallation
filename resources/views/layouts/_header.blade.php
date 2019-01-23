@@ -12,11 +12,11 @@
       <!-- Left Side Of Navbar -->
 
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item {{ active_class(if_route('documents.index')) }}"><a class="nav-link" href="{{ route('documents.index') }}">文档分类</a></li>
-        <li class="nav-item {{ category_nav_active(1) }}"><a class="nav-link" href="{{ route('categories.show', 1) }}">合同</a></li>
+        <li class="nav-item {{ active_class(if_route('files.index')) }}"><a class="nav-link" href="{{ route('files.index') }}">文件分类</a></li>
+<!--         <li class="nav-item {{ category_nav_active(1) }}"><a class="nav-link" href="{{ route('categories.show', 1) }}">合同</a></li>
         <li class="nav-item {{ category_nav_active(2) }}"><a class="nav-link" href="{{ route('categories.show', 2) }}">技术</a></li>
         <li class="nav-item {{ category_nav_active(3) }}"><a class="nav-link" href="{{ route('categories.show', 3) }}">邮件</a></li>
-        <li class="nav-item {{ category_nav_active(4) }}"><a class="nav-link" href="{{ route('categories.show', 4) }}">图纸</a></li>
+        <li class="nav-item {{ category_nav_active(4) }}"><a class="nav-link" href="{{ route('categories.show', 4) }}">图纸</a></li> -->
       </ul>
 
 
@@ -28,7 +28,7 @@
           <li class="nav-item"><a class="nav-link" href="{{route('register')}}">注册</a></li>
         @else
           <li class="nav-item">
-            <a class="nav-link mt-1 mr-3 font-weight-bold" href="{{ route('documents.create') }}">
+            <a class="nav-link mt-1 mr-3 font-weight-bold" href="{{ route('files.create') }}">
               <i class="fa fa-plus"></i>
             </a>
           </li>

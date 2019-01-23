@@ -9,13 +9,17 @@ class CreateTranslationsTable extends Migration
 	{
 		Schema::create('translations', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('creation_id')->unsigned()->index();
-            $table->integer('change_id')->unsigned()->index();
+            // $table->integer('creationid')->unsigned()->index();
+            $table->string('creationid')->index();
+            $table->string('changeid')->index();
             $table->integer('usagecount')->unsigned();
-            $table->string('source_language');
-            $table->string('target_language');
+            $table->integer('source_language_id')->unsigned();
+            $table->integer('target_language_id')->unsigned();
             $table->text('source');
             $table->text('target');
+            $table->string('lastusagedate');
+            $table->string('creationdate');
+            $table->string('changedate');
             $table->timestamps();
         });
 	}

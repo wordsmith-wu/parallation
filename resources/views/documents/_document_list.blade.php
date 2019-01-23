@@ -2,11 +2,11 @@
   <ul class="list-unstyled">
     @foreach ($documents as $document)
       <li class="media">
-        <div class="media-left">
+<!--         <div class="media-left">
           <a href="{{ route('users.show', [$document->user_id]) }}">
             <img class="media-object img-thumbnail mr-3" style="width: 52px; height: 52px;" src="{{ $document->user->avatar }}" title="{{ $document->user->name }}">
           </a>
-        </div>
+        </div> -->
 
         <div class="media-body">
 
