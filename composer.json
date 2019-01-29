@@ -19,6 +19,7 @@
         "maatwebsite/excel": "~2.1.0",
         "mews/captcha": "~2.0",
         "mews/purifier": "~2.0",
+        "mpociot/teamwork": "^5.2",
         "overtrue/laravel-lang": "~3.0",
         "overtrue/pinyin": "~3.0",
         "phpoffice/phpword": "^0.16.0",

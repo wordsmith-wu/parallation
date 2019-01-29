@@ -11,11 +11,15 @@ use Spatie\Permission\Traits\HasRoles;
 
 use App\Models\Document;
 
+use Mpociot\Teamwork\Traits\UserHasTeams;
+
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
-		use HasRoles;
+
+	use HasRoles;
     use Notifiable, MustVerifyEmailTrait;
+    use UserHasTeams; // Add this trait to your model
 
     /**
      * The attributes that are mass assignable.
