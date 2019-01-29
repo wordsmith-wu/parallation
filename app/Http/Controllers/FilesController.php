@@ -25,10 +25,11 @@ class FilesController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index()
+	public function index(User $user)
 	{
 		$files = File::recent()->paginate();
-		return view('files.index', compact('files'));
+		$active_users = $user->getActiveUsers();
+		return view('files.index', compact('files','active_users'));
 	}
 
     // public function show(File $file)

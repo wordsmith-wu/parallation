@@ -21,6 +21,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
     use Notifiable, MustVerifyEmailTrait;
     use UserHasTeams; // Add this trait to your model
 
+    use Traits\ActiveUserHelper;
     /**
      * The attributes that are mass assignable.
      *
