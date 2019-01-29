@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FileRequest;
 use App\Models\Paragraph;
+use App\Models\Term;
 use App\Handlers\FileUploadHandler;
 use App\Models\Project;
 use App\Handlers\TranslationHandler;
 use App\Handlers\Docx2TextHandler;
 use App\Handlers\SlugTranslateHandler;
 use Auth;
+use PhpOffice\PhpWord\Shared\ZipArchive;
+
 
 class FilesController extends Controller
 {
@@ -117,8 +120,48 @@ class FilesController extends Controller
 
 	public function import()
 	{
-  
-		$result =app(SlugTranslateHandler::class)->translate('这是一个测试');
+
+		$filename = public_path() . '/uploads/files/test.docx';
+		// 实例化
+
+        $docx = new ZipArchive();
+        $docx->open($filename);
+        $document = $docx->getFromName('word/document.xml');
+        $docx->deleteName('word/document.xml');
+        $domDocument = new \DomDocument();
+        $domDocument->loadXML($document);
+        //get the body node to check the content from all his children
+  //       $bodyNode = $domDocument->getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 'body');
+  //       //We get the body node. it is known that there is only one body tag
+  //       $bodyNode = $bodyNode->item(0);
+		// $child = $bodyNode->childNodes[0];
+		// $textNode = $child->childNodes[];
+
+
+        $textNodes = $domDocument->getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 't');
+        //We get the body node. it is known that there is only one body tag
+        $textNode = $textNodes[0];
+        $textNode->nodeValue = app(TranslationHandler::class)->findTranslate($textNode->nodeValue,'zh','en');
+
+
+		// $child->nodeValue = app(TranslationHandler::class)->findTranslate($child->nodeValue,'zh','en');
+		// dd($child);
+		// $str = $domDocument->saveXml();
+		// dd($str);
+		$docx->addFromString('word/document.xml',$domDocument->saveXml());
+		$docx->close();
+		// echo '<pre>'; echo print_r($textNode[0]); echo '</pre>';
+		// echo '<pre>'; echo print_r($document); echo '</pre>';
+		// $text = app(Docx2TextHandler::class);
+		// // 加载docx文件
+		// $text->setDocx($source);
+		// // 将内容存入$docx变量中
+		// $paras = $text->extract();
+
+		// return view('files.showparas',compact('paras'));
+
+
+		$result = 'abc';
 		return view('files.result',compact('result'));
 	}
 

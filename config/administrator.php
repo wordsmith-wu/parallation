@@ -61,7 +61,20 @@ return array(
     'menu' => [
         '用户与权限' => [
             'users',
+            'roles',
+            'permissions',
         ],
+        '文件管理' => [
+            'projects',
+            'files',
+            'paragraphs',
+            'comments',
+        ],
+        '翻译管理' => [
+            'translations',
+            'terms',
+            'languages',
+        ]
     ],
 
     /*

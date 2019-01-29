@@ -3,6 +3,8 @@
 namespace App\Handlers;
 
 use GuzzleHttp\Client;
+use App\Models\Translation;
+use App\Models\Language;
 
 class TranslationHandler
 {
@@ -102,6 +104,20 @@ class TranslationHandler
         // 尝试获取获取翻译结果
         return $result['trans_result'][0]['dst'];
 
+    }
+
+    public function findTranslate($text,$from,$to)
+    {
+        $text_md5 = md5($text);
+        $source_language_id = \DB::table('languages')->where('code',$from)->first()->id;
+        $target_language_id = \DB::table('languages')->where('code',$to)->first()->id;
+        
+        $res = \DB::table('translations')->where('source_md5',$text_md5)->first();
+        if ($res) {
+            return $res->target;
+        } else {
+            return null;
+        }
     }
 
 
